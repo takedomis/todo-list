@@ -21,7 +21,19 @@
             </tr>
           </thead>
           <tbody>
-            <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
+            <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい v-for="各要素の一時的な名前 in 繰り返したい配列やオブジェクト" -->
+              <tr v-for="item in todos" v-bind:key="item.id">
+                <th>{{ item.id }}</th>
+                <td>{{ item.comment }}</td>
+                <td class="state">
+                  <!-- 状態変更ボタン -->
+                  <button>{{ item.state }}</button>
+                </td>
+                <td class="button">
+                  <!-- 削除ボタン -->
+                  <button>削除</button>
+                </td>
+            </tr>
           </tbody>
         </table>
     </div>
