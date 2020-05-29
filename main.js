@@ -21,15 +21,40 @@ var todoStorage = {
   }
 }
 
-const app = new Vue({
+new Vue({
     el: '#app',
     data: {
-      todos: []
+      todos: [],
+      // 選択している options の value を記憶するためのデータ。初期値を「すべて」にする
+      current: -1,
+      options: [
+        { value: -1, label: 'すべて' },
+        { value: 0,  label: '作業中' },
+        { value: 1,  label: '完了' }
+      ]
     },
+    
+    computed: {
+      computedTodos: function() {
+        // データ current が -1 ならすべて、それ以外なら current と state が一致するものだけに絞り込む
+        return this.todos.filter(function(el) {
+          return this.current < 0 ? true : this.current === el.state
+        }, this)
+      },
+      // 配列.reduce(function(累積値, 要素) { })
+      labels() {
+        return this.options.reduce(function(a, b) {
+          // object.assign(第一引数,第二引数以降の全てのオブジェクトのプロパティを第一引数に指定したオブジェクトにコピー)
+          return Object.assign(a, { [b.value]: b.label })
+        }, {})
+      }
+    },
+
     // インスタンス作成時に自動的に fetch() する
     created() {
       this.todos = todoStorage.fetch()
-    }
+    },
+
     methods: {
       // ToDo 追加の処理
       doAdd: function(event, value) {
@@ -46,7 +71,7 @@ const app = new Vue({
         })
         // フォーム要素を空にする
         comment.value = ''
-      }
+      },
       // 状態変更の処理
       doChangeState: function(item) {
         item.state = item.state ? 0 : 1
@@ -56,7 +81,7 @@ const app = new Vue({
         var index = this.todos.indexOf(item)
         this.todos.splice(index, 1)
       }
-    }
+    },
     watch: {
       todos: {
         handler: function(todos) {
@@ -66,4 +91,4 @@ const app = new Vue({
         deep: true
       }
     }
-  })
+})
