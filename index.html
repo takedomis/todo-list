@@ -26,7 +26,7 @@
             <td>{{ item.comment }}</td>
             <td class="state">
               <!-- 状態変更ボタン -->
-              <button>{{ item.state }}</button>
+              <button v-on:click="doChangeState(item)">{{ item.state }}</button>
             </td>
             <td class="button">
               <!-- 削除ボタン -->

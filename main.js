@@ -26,6 +26,10 @@ const app = new Vue({
     data: {
       todos: []
     },
+    // インスタンス作成時に自動的に fetch() する
+    created() {
+      this.todos = todoStorage.fetch()
+    }
     methods: {
       // ToDo 追加の処理
       doAdd: function(event, value) {
@@ -42,6 +46,15 @@ const app = new Vue({
         })
         // フォーム要素を空にする
         comment.value = ''
+      }
+      // 状態変更の処理
+      doChangeState: function(item) {
+        item.state = item.state ? 0 : 1
+      },
+      // 削除の処理
+      doRemove: function(item) {
+        var index = this.todos.indexOf(item)
+        this.todos.splice(index, 1)
       }
     }
     watch: {
