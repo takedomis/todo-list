@@ -52,6 +52,5 @@ const app = new Vue({
         // deep オプションでネスト(if文のなかのwhile文のなかのif文のようなもの)しているデータも監視
         deep: true
       }
-      // 使用するメソッド
     }
   })
